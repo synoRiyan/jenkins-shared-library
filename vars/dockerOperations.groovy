@@ -2,7 +2,7 @@
 def buildAndPushImage(String dockerRegistry, String imageName, String imageVersion) {
     echo "Building Docker image..."
     sh """
-        docker build -t ${dockerRegistry}/${imageName}:${imageVersion} .
+        docker build -t ${dockerRegistry}/${imageName}:${imageVersion} -f ./Dockerfile .
     """
     
     echo "Pushing Docker image..."
