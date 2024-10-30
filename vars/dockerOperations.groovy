@@ -25,7 +25,12 @@ def deployWithDockerCompose(String serverUserName, String serverIp, String serve
     """
     
     echo "Deploying Docker containers with Docker Compose..."
+   // sh """
+   //     sshpass -p ${serverPassword} ssh -o StrictHostKeyChecking=no ${serverUserName}@${serverIp} 'cd ${deployPath} && docker-compose pull && docker-compose up -d'
+   // """
+
     sh """
-        sshpass -p ${serverPassword} ssh -o StrictHostKeyChecking=no ${serverUserName}@${serverIp} 'cd ${deployPath} && docker-compose pull && docker-compose up -d'
+        sshpass -p ${serverPassword} ssh -o StrictHostKeyChecking=no ${serverUserName}@${serverIp} 'cd ${deployPath} && docker-compose pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION} && docker-compose up -d ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION}'
     """
+
 }
